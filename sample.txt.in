@@ -1,0 +1,7 @@
+This is a list of people:
+
+{% for person in people %}
+- {{person.name}}
+
+    Title: {{person.title}}
+{% endfor %}

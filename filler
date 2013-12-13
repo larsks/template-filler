@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import argparse
+import jinja2
+import os
+import sys
+import yaml
+
+
+def parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument('--key', '-k', action='append',
+                   default=[])
+    p.add_argument('--output', '-o')
+    p.add_argument('--parameter-file', '-p')
+    p.add_argument('template')
+    return p.parse_args()
+
+
+def main():
+    ctx = {}
+    args = parse_args()
+
+    env = jinja2.Environment(
+        lstrip_blocks=True,
+        trim_blocks=False,
+        loader = jinja2.FileSystemLoader(os.path.dirname(args.template)))
+
+    with open(args.template) as fd:
+        template = env.from_string(fd.read())
+
+    if args.parameter_file:
+        with open(args.parameter_file) as fd:
+            ctx.update(yaml.load(fd))
+
+    with (open(args.output, 'w') if args.output else sys.stdout) as fd:
+        for kspec in args.key:
+            k, v = kspec.split('=', 1)
+
+            if v[0] in ['[', '{']:
+                v = yaml.load(v)
+
+            ctx[k] = v
+
+        fd.write(template.render(**ctx))
+
+if __name__ == '__main__':
+    main()
+

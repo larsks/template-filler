@@ -1,0 +1,4 @@
+people:
+  - { name: Alice, title: "Chief muckamuck" }
+  - { name: Bob, title: "Grand pooba" }
+  - { name: Mallory, title: "Llama herder" }
