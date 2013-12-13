@@ -2,12 +2,14 @@
 
 `template-filler` is a tool for rendering templates on the command
 line.  It takes as input a [Jinja2][] template and a list of values on
-the command line or in a configuration and produces the rendered
+the command line or in a parameter file and produces the rendered
 version of the template.
 
 ## Synopsis
 
-    usage: filler [-h] [--key KEY] [--output OUTPUT] [--config CONFIG] template
+    usage: filler [-h] [--key KEY] [--output OUTPUT]
+                  [--parameter-file PARAMETER_FILE]
+                  template
 
     positional arguments:
       template
@@ -16,14 +18,15 @@ version of the template.
       -h, --help            show this help message and exit
       --key KEY, -k KEY
       --output OUTPUT, -o OUTPUT
-      --config CONFIG, -f CONFIG
+      --parameter-file PARAMETER_FILE, -p PARAMETER_FILE
 
 ## Options
 
 - `--key`, `-k` *key=value* -- Set *key* to *value*.  If *value*
   starts with a `[` or `{`, it will be parsed as a JSON value.
-- `--config`, `-f` *config* -- Read template parameters, a [YAML][]
-  format configuration file.
+- `--parameter-file`, `-p` *parameter_file* -- Read template
+  parameters from *parameter_file*, a [YAML][] format configuration
+  file.
 - `--output`, `-o` *output* -- Write output to *output* instead of
   *stdout*.
 
